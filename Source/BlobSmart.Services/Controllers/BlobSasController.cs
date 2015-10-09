@@ -1,10 +1,10 @@
 ﻿using BlobSmart.Common;
-using System.Linq;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Web.Http;
 
 namespace BlobSmart.Services.Controllers
