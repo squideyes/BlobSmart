@@ -41,10 +41,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enums\ReadOrWrite.cs" />
-    <Compile Include="Extenders\StringExtenders.cs" />
-    <Compile Include="Primatives\SasRequest.cs" />
-    <Compile Include="Primatives\SasResult.cs" />
+    <Compile Include="Contracts\Enums\ReadOrWrite.cs" />
+    <Compile Include="Generics\Attributes\DateAttribute.cs" />
+    <Compile Include="Generics\Attributes\DefinedEnumAttribute.cs" />
+    <Compile Include="Generics\Attributes\HasItemsAttribute.cs" />
+    <Compile Include="Generics\Attributes\NonEmptyStringAttribute.cs" />
+    <Compile Include="Generics\Attributes\RoundedDoubleAttribute.cs" />
+    <Compile Include="Generics\Attributes\SundayAttribute.cs" />
+    <Compile Include="Generics\Collections\AbstractList.cs" />
+    <Compile Include="Generics\Enums\LogItemKind.cs" />
+    <Compile Include="Generics\EventArgs\GenericArgs.cs" />
+    <Compile Include="Generics\EventArgs\LogItemArgs.cs" />
+    <Compile Include="Generics\Exceptions\BadFieldException.cs" />
+    <Compile Include="Generics\Exceptions\ValidationException.cs" />
+    <Compile Include="Generics\Extenders\AssemblyExtenders.cs" />
+    <Compile Include="Generics\Extenders\BinaryReaderExtenders.cs" />
+    <Compile Include="Generics\Extenders\CollectionExtenders.cs" />
+    <Compile Include="Generics\Extenders\DateTimeExtenders.cs" />
+    <Compile Include="Generics\Extenders\DoubleExtenders.cs" />
+    <Compile Include="Generics\Extenders\EnumExtenders.cs" />
+    <Compile Include="Generics\Extenders\IEnumerableExtenders.cs" />
+    <Compile Include="Generics\Extenders\ObjectExtenders.cs" />
+    <Compile Include="Generics\Extenders\StringExtenders.cs" />
+    <Compile Include="Generics\Extenders\UriExtenders.cs" />
+    <Compile Include="Generics\Helpers\AppInfo.cs" />
+    <Compile Include="Generics\Helpers\Contract.cs" />
+    <Compile Include="Generics\Helpers\CsvFileReader.cs" />
+    <Compile Include="Generics\Helpers\EnumHelper.cs" />
+    <Compile Include="Generics\Helpers\ValidationHelper.cs" />
+    <Compile Include="Generics\Primatives\LogItem.cs" />
+    <Compile Include="Contracts\Primatives\SasRequest.cs" />
+    <Compile Include="Contracts\Primatives\SasResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
