@@ -11,7 +11,8 @@ namespace BlobSmart.Uploader
 {
     public class MainViewModel : ViewModelBase<MainViewModel, MainModel>
     {
-        public HashSet<string> fileNames = new HashSet<string>();
+        private HashSet<string> fileNames = new HashSet<string>();
+        private bool? canSelectAll = false;
 
         private string initialFolder;
         private bool isLoggedOn;
@@ -34,6 +35,28 @@ namespace BlobSmart.Uploader
             get
             {
                 return Global.AppInfo.GetTitle();
+            }
+        }
+
+        public bool? CanSelectAll
+        {
+            get
+            {
+                if (UploadInfos.Count == 0)
+                    return false;
+                else
+                    return canSelectAll;
+            }
+            set
+            {
+                canSelectAll = value;
+
+                if (value == true)
+                    UploadInfos.ToList().ForEach(di => di.Selected = true);
+                else if (value == false)
+                    UploadInfos.ToList().ForEach(di => di.Selected = false);
+
+                NotifyPropertyChanged(vm => vm.CanSelectAll);
             }
         }
 
@@ -68,6 +91,21 @@ namespace BlobSmart.Uploader
             }
         }
 
+        private void UpdateCanSelectAll()
+        {
+            var canFetchCount = UploadInfos.Count(di => di.Selected);
+
+            if (canFetchCount == 0)
+                canSelectAll = false;
+            else if (canFetchCount == UploadInfos.Count)
+                canSelectAll = true;
+            else
+                canSelectAll = null;
+
+            NotifyPropertyChanged(vm => vm.CanSelectAll);
+            NotifyPropertyChanged(vm => vm.StartCommand);
+        }
+
         public DelegateCommand AddCommand
         {
             get
@@ -94,7 +132,11 @@ namespace BlobSmart.Uploader
 
                                 fileNames.Add(fileName);
 
-                                UploadInfos.Add(new UploadInfo(fileName));
+                                var uploadInfo = new UploadInfo(fileName);
+
+                                uploadInfo.PropertyChanged += (s, e) => UpdateCanSelectAll();
+
+                                UploadInfos.Add(uploadInfo);
                             }
 
                             NotifyPropertyChanged(vm => vm.DeleteCommand);
@@ -134,6 +176,8 @@ namespace BlobSmart.Uploader
                         NotifyPropertyChanged(vm => vm.DeleteCommand);
                         NotifyPropertyChanged(vm => vm.ClearCommand);
                         NotifyPropertyChanged(vm => vm.StartCommand);
+
+                        UpdateCanSelectAll();
                     },
                     () => (!IsUploading) && (UploadInfos.Count > 0));
             }
@@ -153,6 +197,8 @@ namespace BlobSmart.Uploader
                         NotifyPropertyChanged(vm => vm.DeleteCommand);
                         NotifyPropertyChanged(vm => vm.ClearCommand);
                         NotifyPropertyChanged(vm => vm.StartCommand);
+
+                        UpdateCanSelectAll();
                     },
                     () => (!IsUploading) && (UploadInfos.Count > 0));
             }
