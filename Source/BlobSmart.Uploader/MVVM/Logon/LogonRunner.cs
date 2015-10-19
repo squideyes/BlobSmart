@@ -2,21 +2,19 @@
 {
     public static class LogonRunner
     {
-        public static void Run(MainWindow owner)
+        public static bool Run(MainWindow owner, LogonModel model)
         {
-            var model = new LogonModel();
+            var dialog = new LogonDialog();
 
             var viewModel = new LogonViewModel(model);
 
-            var dialog = new LogonDialog();
+            viewModel.OnCancel += (s, e) => dialog.Close();
 
             dialog.Owner = owner;
 
             dialog.DataContext = viewModel;
 
-            if (dialog.ShowDialog() == true)
-            {
-            }
+            return (dialog.ShowDialog() == true);
         }
     }
 }

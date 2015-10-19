@@ -4,11 +4,17 @@ using System.Linq.Expressions;
 
 namespace BlobSmart.GUI
 {
-    public abstract class NotifyBase<TM> : INotifyPropertyChanged
+    public abstract class NotifyBase<M> : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected void NotifyPropertyChanged<TR>(Expression<Func<TM, TR>> property)
+        protected bool IsProperty<T>(
+            PropertyChangedEventArgs e, Expression<Func<T, string>> property)
+        {
+            return ((MemberExpression)property.Body).Member.Name == e.PropertyName;
+        }
+
+        protected void NotifyPropertyChanged<R>(Expression<Func<M, R>> property)
         {
             if (PropertyChanged != null)
             {

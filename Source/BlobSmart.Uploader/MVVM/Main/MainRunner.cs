@@ -4,7 +4,7 @@
     {
         public static void Run()
         {
-            var view = new MainWindow();
+            var window = new MainWindow();
 
             var viewModel = new MainViewModel(
                 Properties.Settings.Default.LastFolder);
@@ -18,12 +18,20 @@
 
             viewModel.OnLogon += (s, e) =>
             {
-                LogonRunner.Run(view);
+                var model = new LogonModel()
+                {
+                    UserName = Properties.Settings.Default.UserName,
+                    Password = Properties.Settings.Default.Password
+                };
+
+                if (LogonRunner.Run(window, model))
+                {
+                }
             };
 
-            view.DataContext = viewModel;
+            window.DataContext = viewModel;
 
-            view.Show();
+            window.Show();
         }
     }
 }

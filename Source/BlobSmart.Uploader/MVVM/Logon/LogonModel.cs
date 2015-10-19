@@ -7,11 +7,6 @@ namespace BlobSmart.Uploader
         private string userName;
         private string password;
 
-        public LogonModel()
-        {
-            UserName = "louis";
-        }
-
         public string UserName
         {
             get
@@ -38,6 +33,12 @@ namespace BlobSmart.Uploader
 
                 NotifyPropertyChanged(m => m.Password);
             }
+        }
+
+        public bool IsValid()
+        {
+            return !string.IsNullOrWhiteSpace(UserName) && 
+                !string.IsNullOrWhiteSpace(Password);
         }
     }
 }
