@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace BlobSmart.Uploader
 {
-    public class MainViewModel : ViewModelBase<MainViewModel, MainModel>
+    public class MainViewModel : NotifyBase<MainViewModel>
     {
         private HashSet<string> fileNames = new HashSet<string>();
         private bool? canSelectAll = false;
@@ -18,10 +18,10 @@ namespace BlobSmart.Uploader
         private bool isLoggedOn;
         private bool isUploading;
 
+        public event EventHandler<NotifyArgs> OnLogon;
         public event EventHandler<GenericArgs<string>> OnFolderChanged;
 
-        public MainViewModel(MainModel model, string initialFolder)
-            : base(model)
+        public MainViewModel(string initialFolder)
         {
             this.initialFolder = initialFolder;
 
@@ -211,6 +211,8 @@ namespace BlobSmart.Uploader
                 return new DelegateCommand(
                     () =>
                     {
+                        RaiseNotifyEvent(OnLogon);
+
                         IsLoggedOn = true;
                     });
             }

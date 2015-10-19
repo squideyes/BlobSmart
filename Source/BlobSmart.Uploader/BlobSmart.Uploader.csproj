@@ -66,6 +66,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="MVVM\Logon\LogonDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\Main\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -78,6 +82,15 @@
     <Compile Include="Converters\EnumToStringConverter.cs" />
     <Compile Include="Enums\UploadStatus.cs" />
     <Compile Include="Helpers\Global.cs" />
+    <Compile Include="Helpers\GridLayout.cs" />
+    <Compile Include="Helpers\IconHelper.cs" />
+    <Compile Include="Helpers\PasswordBoxHelper.cs" />
+    <Compile Include="MVVM\Logon\LogonDialog.xaml.cs">
+      <DependentUpon>LogonDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MVVM\Logon\LogonModel.cs" />
+    <Compile Include="MVVM\Logon\LogonRunner.cs" />
+    <Compile Include="MVVM\Logon\LogonViewModel.cs" />
     <Compile Include="MVVM\Main\MainModel.cs" />
     <Compile Include="MVVM\Main\MainRunner.cs" />
     <Compile Include="MVVM\Main\MainViewModel.cs" />
@@ -149,6 +162,7 @@
   <ItemGroup>
     <Resource Include="Images\Options-32x32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

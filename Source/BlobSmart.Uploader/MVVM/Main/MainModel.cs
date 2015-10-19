@@ -2,7 +2,7 @@
 
 namespace BlobSmart.Uploader
 {
-    public class MainModel : ModelBase<MainModel>
+    public class MainModel : NotifyBase<MainModel>
     {
     }
 }

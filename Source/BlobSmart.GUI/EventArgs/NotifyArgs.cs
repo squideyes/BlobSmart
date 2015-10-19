@@ -13,6 +13,6 @@ namespace BlobSmart.GUI
             Data = data;
         }
 
-        public T Data { get; protected set; }
+        public T Data { get; }
     }
 }
