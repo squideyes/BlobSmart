@@ -1,44 +1,39 @@
 ﻿using BlobSmart.GUI;
+using System;
 
 namespace BlobSmart.Uploader
 {
     public class LogonModel : NotifyBase<LogonModel>
     {
-        private string userName;
-        private string password;
+        private Uri uri;
+        private Exception error;
 
-        public string UserName
+        public Uri Uri
         {
             get
             {
-                return userName;
+                return uri;
             }
             set
             {
-                userName = value;
+                uri = value;
 
-                NotifyPropertyChanged(m => m.UserName);
+                NotifyPropertyChanged(m => m.Uri);
             }
         }
 
-        public string Password
+        public Exception Error
         {
             get
             {
-                return password;
+                return error;
             }
             set
             {
-                password = value;
+                error = value;
 
-                NotifyPropertyChanged(m => m.Password);
+                NotifyPropertyChanged(m => m.Error);
             }
-        }
-
-        public bool IsValid()
-        {
-            return !string.IsNullOrWhiteSpace(UserName) && 
-                !string.IsNullOrWhiteSpace(Password);
         }
     }
 }

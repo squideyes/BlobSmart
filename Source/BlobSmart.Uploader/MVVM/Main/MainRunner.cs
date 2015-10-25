@@ -18,15 +18,10 @@
 
             viewModel.OnLogon += (s, e) =>
             {
-                var model = new LogonModel()
-                {
-                    UserName = Properties.Settings.Default.UserName,
-                    Password = Properties.Settings.Default.Password
-                };
+                var uri = LogonRunner.Run(window);
 
-                if (LogonRunner.Run(window, model))
-                {
-                }
+                if (uri != null)
+                    viewModel.HandleLogon(uri);
             };
 
             window.DataContext = viewModel;

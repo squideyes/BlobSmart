@@ -35,27 +35,12 @@ namespace BlobSmart.Uploader.Properties {
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string UserName {
+        [global::System.Configuration.DefaultSettingValueAttribute("http://blobsmartdc94f3ac282e4ce8a52d0e4e5ce313d3.azurewebsites.net/")]
+        public global::System.Uri GatewayUri {
             get {
-                return ((string)(this["UserName"]));
-            }
-            set {
-                this["UserName"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string Password {
-            get {
-                return ((string)(this["Password"]));
-            }
-            set {
-                this["Password"] = value;
+                return ((global::System.Uri)(this["GatewayUri"]));
             }
         }
     }

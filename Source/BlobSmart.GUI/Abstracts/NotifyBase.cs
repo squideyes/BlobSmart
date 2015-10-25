@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.ComponentModel;
 using System.Linq.Expressions;
 
@@ -8,10 +9,11 @@ namespace BlobSmart.GUI
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected bool IsProperty<T>(
-            PropertyChangedEventArgs e, Expression<Func<T, string>> property)
+        protected bool IsProperty<T>(PropertyChangedEventArgs e, 
+            params Expression<Func<T, string>>[] properties)
         {
-            return ((MemberExpression)property.Body).Member.Name == e.PropertyName;
+            return properties.Any(p => 
+                ((MemberExpression)p.Body).Member.Name == e.PropertyName);
         }
 
         protected void NotifyPropertyChanged<R>(Expression<Func<M, R>> property)

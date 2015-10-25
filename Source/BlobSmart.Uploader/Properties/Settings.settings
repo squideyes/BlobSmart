@@ -5,11 +5,8 @@
     <Setting Name="LastFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="UserName" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
-    <Setting Name="Password" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="GatewayUri" Type="System.Uri" Scope="Application">
+      <Value Profile="(Default)">http://blobsmartdc94f3ac282e4ce8a52d0e4e5ce313d3.azurewebsites.net/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

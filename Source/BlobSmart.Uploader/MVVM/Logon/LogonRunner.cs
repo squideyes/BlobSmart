@@ -1,20 +1,31 @@
-﻿namespace BlobSmart.Uploader
+﻿using System;
+
+namespace BlobSmart.Uploader
 {
     public static class LogonRunner
     {
-        public static bool Run(MainWindow owner, LogonModel model)
+        public static Uri Run(MainWindow owner)
         {
             var dialog = new LogonDialog();
 
-            var viewModel = new LogonViewModel(model);
+            var model = new LogonModel();
 
-            viewModel.OnCancel += (s, e) => dialog.Close();
+            var viewModel = new LogonViewModel(model);
 
             dialog.Owner = owner;
 
             dialog.DataContext = viewModel;
 
-            return (dialog.ShowDialog() == true);
+            dialog.OnLoadCompleted += (s, e) =>
+            {
+                model.Uri = e.Item;
+
+                dialog.Close();
+            };
+
+            dialog.ShowDialog();
+
+            return model.Uri;
         }
     }
 }

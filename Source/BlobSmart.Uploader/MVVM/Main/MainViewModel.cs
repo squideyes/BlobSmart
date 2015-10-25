@@ -6,6 +6,8 @@ using System;
 using BlobSmart.Common.Generics;
 using System.IO;
 using System.Collections.Generic;
+using Microsoft.Azure.AppService;
+using Newtonsoft.Json;
 
 namespace BlobSmart.Uploader
 {
@@ -17,6 +19,7 @@ namespace BlobSmart.Uploader
         private string initialFolder;
         private bool isLoggedOn;
         private bool isUploading;
+        private AppServiceClient appServiceClient;
 
         public event EventHandler<NotifyArgs> OnLogon;
         public event EventHandler<GenericArgs<string>> OnFolderChanged;
@@ -204,17 +207,56 @@ namespace BlobSmart.Uploader
             }
         }
 
+        public void HandleLogon(Uri uri)
+        {
+            var encodedJson = uri.AbsoluteUri.Substring(
+                uri.AbsoluteUri.IndexOf(WellKnown.UrlToken) + WellKnown.UrlToken.Length);
+
+            var decodedJson = Uri.UnescapeDataString(encodedJson);
+
+            var result = JsonConvert.DeserializeObject<dynamic>(decodedJson);
+
+            string userId = result.user.userId;
+
+            string userToken = result.authenticationToken;
+
+            var url = Global.GatewayUri.AbsoluteUri;
+
+            if (!url.EndsWith("/"))
+                url += "/";
+
+            appServiceClient = new AppServiceClient(url);
+
+            appServiceClient.SetCurrentUser(userId, userToken);
+
+            IsLoggedOn = true;
+        }
+
+
+
+
+
+        //public void HandleOnLoadCompleted(Uri uri)
+        //{
+        //        //var api = Global.AppServiceClient.CreateBlobSmartAPI();
+
+        //        //var values = api.Values.Get();
+
+        //        //foreach (var value in values)
+        //        //    textBox.Text += value + Environment.NewLine;
+
+        //        //appServiceClient.Logout();
+        //        //browser.Navigate(string.Format(@"{0}login/aad", GATEWAY_URL));
+        //}
+
         public DelegateCommand LogonCommand
         {
             get
             {
-                return new DelegateCommand(
-                    () =>
-                    {
-                        RaiseNotifyEvent(OnLogon);
-
-                        IsLoggedOn = true;
-                    });
+                return new DelegateCommand(() =>
+                {
+                    RaiseNotifyEvent(OnLogon);
+                });
             }
         }
 
@@ -223,8 +265,13 @@ namespace BlobSmart.Uploader
             get
             {
                 return new DelegateCommand(
-                    () =>
+                    async () =>
                     {
+                        // does this throw an error? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                        await appServiceClient.Logout();
+
+                        appServiceClient = null;
+
                         IsLoggedOn = false;
                     });
             }
